@@ -73,12 +73,7 @@ public class Adduser extends Fragment {
         Address=getActivity().findViewById(R.id.Address);
         Addbus=getActivity().findViewById(R.id.Addbus);
         db = FirebaseFirestore.getInstance();
-        Addbus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddtoFireBseStore();
-            }
-        });
+
     }
     private void AddtoFireBseStore() {
         String fullname,Username,userPhone,userAddress;
@@ -105,6 +100,12 @@ public class Adduser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         attachComponents();
+        Addbus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddtoFireBseStore();
+            }
+        });
         return inflater.inflate(R.layout.fragment_adduser, container, false);
     }
 }
