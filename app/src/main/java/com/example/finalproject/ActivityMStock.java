@@ -45,7 +45,7 @@ public class ActivityMStock extends AppCompatActivity {
                             transaction.commit();
                             return b;
                         case R.id.accountm:
-                            transaction.replace(R.id.FrameLayout, new accountfra());
+                            transaction.replace(R.id.FrameLayout, new Adduser());
                             transaction.commit();
                             return b;
                         case R.id.home:
@@ -53,7 +53,7 @@ public class ActivityMStock extends AppCompatActivity {
                             transaction.commit();
                             return b;
                         case R.id.addda:
-                            transaction.replace(R.id.FrameLayout, new Adduser());
+                            transaction.replace(R.id.FrameLayout, new Addstockfragment());
                             transaction.commit();
                             return true;
                     }

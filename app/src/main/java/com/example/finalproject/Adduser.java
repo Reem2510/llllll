@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class Adduser extends Fragment {
     private EditText Address,Phone,editUsername,Fullname;
-    private Button Addbus ;
+    private Button Addbus,Edit;
     private FirebaseFirestore db;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +72,7 @@ public class Adduser extends Fragment {
         Phone=getActivity().findViewById(R.id.Phone);
         Address=getActivity().findViewById(R.id.Address);
         Addbus=getActivity().findViewById(R.id.Addbus);
+        Edit=getActivity().findViewById(R.id.Edit);
         db = FirebaseFirestore.getInstance();
 
     }
@@ -81,19 +82,20 @@ public class Adduser extends Fragment {
         Username=editUsername.getText().toString();
         userPhone=Phone.getText().toString();
         userAddress=Address.getText().toString();
-        if (fullname.trim().isEmpty()||Username.trim().isEmpty()||userAddress.trim().isEmpty()||userPhone.trim().isEmpty())
+        if (fullname.trim().isEmpty()||userAddress.trim().isEmpty()||userPhone.trim().isEmpty())
         {
             Toast.makeText(getActivity(),"some data are missing",Toast.LENGTH_SHORT).show();
             return;
         }
-       UserClass u=new UserClass(fullname,userAddress,userPhone,Username);
-        Map<String, Object> docData = new HashMap<>();
-        docData.put("Fullname", fullname);
-        docData.put("Username", Username);
-        docData.put("Address", userAddress);
-        docData.put("Phone", userPhone);
-        DocumentReference future = db.collection("users").document(Username);
-        future.set(docData);
+        else {
+            UserClass u = new UserClass(fullname, userAddress, userPhone, Username);
+            Map<String, Object> docData = new HashMap<>();
+            docData.put("Fullname", fullname);
+            docData.put("Address", userAddress);
+            docData.put("Phone", userPhone);
+            DocumentReference future = db.collection("users").document(Username);
+            future.set(docData);
+        }
     }
 
     @Override

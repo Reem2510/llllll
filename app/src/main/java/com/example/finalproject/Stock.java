@@ -14,7 +14,7 @@ public class Stock {
 
     public Stock(String description, String stockName, String value) {
         this.description = description;
-        StockName = stockName;
+        this.StockName = stockName;
         this.value = value;
     }
 

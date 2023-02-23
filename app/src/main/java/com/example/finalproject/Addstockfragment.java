@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +30,7 @@ import java.util.Map;
  */
 public class Addstockfragment extends Fragment {
     private EditText valued,descriptiond,named;
+    ImageView image;
     private Button Addbt;
     private  FirebaseFirestore db;
     // TODO: Rename parameter arguments, choose names that match
@@ -66,12 +69,7 @@ public class Addstockfragment extends Fragment {
         named=getActivity().findViewById(R.id.named);
         descriptiond=getActivity().findViewById(R.id.descriptiond);
          db = FirebaseFirestore.getInstance();
-         Addbt.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 addtoFireBseStore();
-             }
-         });
+
     }
 
     private void addtoFireBseStore() {
@@ -84,12 +82,15 @@ public class Addstockfragment extends Fragment {
                  Toast.makeText(getActivity(),"some data are missing",Toast.LENGTH_SHORT).show();
                  return;
              }
-             Stock s=new Stock(description,stockname,Value);
-        Map<String, Object> docData = new HashMap<>();
-        docData.put("description", description);
-        docData.put("Value", Arrays.asList(Value));
-        DocumentReference future = db.collection("Stockname").document(stockname);
-        future.set(docData);
+             else {
+                 Stock s = new Stock(description, stockname, Value);
+                 Map<String, Object> docData = new HashMap<>();
+                 docData.put("description", description);
+                 docData.put("Value", Arrays.asList(Value));
+                 DocumentReference future = db.collection("Stockname").document(stockname);
+                 future.set(docData);
+                 Toast.makeText(getActivity(),"data added",Toast.LENGTH_SHORT).show();
+             }
 
     }
 
@@ -105,7 +106,20 @@ public class Addstockfragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        attachComponents();
+
         return inflater.inflate(R.layout.fragment_addstockfragment, container, false);
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        attachComponents();
+        Addbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addtoFireBseStore();
+
+            }
+        });
+    }
+
 }
