@@ -106,12 +106,13 @@
 
         </LinearLayout>
 
+
         <Button
             android:id="@+id/Addbus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginBottom="36dp"
             android:backgroundTint="#6B9B6C"
             android:text="add"
             android:textSize="18sp"
@@ -119,7 +120,6 @@
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
 
         <ImageView
             android:id="@+id/imageView2"

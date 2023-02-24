@@ -1,7 +1,8 @@
 package com.example.finalproject;
 
-public class UserClass {
-    private String name,adrees,phone,username;
+public class
+UserClass {
+    private String name,adrees,phone;
 
     @Override
     public String toString() {
@@ -9,15 +10,14 @@ public class UserClass {
                 "name='" + name + '\'' +
                 ", adrees='" + adrees + '\'' +
                 ", phone='" + phone + '\'' +
-                ", username='" + username + '\'' +
-                '}';
+                '}'
+               ;
     }
 
-    public UserClass(String name, String adrees, String phone, String username) {
+    public UserClass(String name, String adrees, String phone) {
         this.name = name;
         this.adrees = adrees;
         this.phone = phone;
-        this.username = username;
     }
 
     public String getName() {
@@ -44,11 +44,4 @@ public class UserClass {
         this.phone = phone;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 }

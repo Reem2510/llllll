@@ -3,6 +3,7 @@ package com.example.finalproject;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,7 +89,7 @@ public class Adduser extends Fragment {
             return;
         }
         else {
-            UserClass u = new UserClass(fullname, userAddress, userPhone, Username);
+            UserClass u = new UserClass(fullname, userAddress, userPhone);
             Map<String, Object> docData = new HashMap<>();
             docData.put("Fullname", fullname);
             docData.put("Address", userAddress);
@@ -106,6 +107,14 @@ public class Adduser extends Fragment {
             @Override
             public void onClick(View v) {
                 AddtoFireBseStore();
+            }
+        });
+        Edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.FrameLayout, new accountfra());
+                ft.commit();
             }
         });
         return inflater.inflate(R.layout.fragment_adduser, container, false);

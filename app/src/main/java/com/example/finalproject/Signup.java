@@ -1,5 +1,7 @@
 package com.example.finalproject;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +21,17 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Signup extends Fragment {
- private  EditText cpassworded,usernamesign,passwordsign;
+ private  EditText cpassworded,usernamesign,passwordsign,Address,Phone,Fullname;
  private Button tsignupbtp,loginbtp;
  private FirebaseAuth objectfirebaseauth;
+    private FirebaseFirestore db;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -35,13 +44,32 @@ public class Signup extends Fragment {
     private String mParam2;
 
     public void createUser(){
+        String fullname,userPhone,userAddress;
+        fullname=Fullname.getText().toString();
+        userPhone=Phone.getText().toString();
+        userAddress=Address.getText().toString();
         try{
-            if(!usernamesign.getText().toString().isEmpty()&&!passwordsign.getText().toString().isEmpty()&&!cpassworded.getText().toString().isEmpty()){
+            if(!usernamesign.getText().toString().isEmpty()&&!passwordsign.getText().toString().isEmpty()&&!cpassworded.getText().toString().isEmpty()&&!Fullname.getText().toString().isEmpty()&&!Phone.getText().toString().isEmpty()&&!Address.getText().toString().isEmpty()){
                 if(passwordsign.getText().toString().equals(cpassworded.getText().toString())) {
+                    UserClass u = new UserClass(fullname, userAddress, userPhone);
+                    db.collection("users")
+                            .add(u).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                }
+                            });
                     objectfirebaseauth.createUserWithEmailAndPassword(usernamesign.getText().toString(), passwordsign.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+
                                     Toast.makeText(getContext(), "Account created.", Toast.LENGTH_SHORT).show();
                                     if (objectfirebaseauth.getCurrentUser() != null) {
                                         objectfirebaseauth.signOut();
@@ -71,11 +99,15 @@ public class Signup extends Fragment {
     }
     private void attachComponents(){
         passwordsign=getActivity().findViewById(R.id.passwordsign);
-            usernamesign=getActivity().findViewById(R.id.usernamesign);
+        Fullname=getActivity().findViewById(R.id.Fullname);
+        Address=getActivity().findViewById(R.id.Address);
+        Phone=getActivity().findViewById(R.id.Phone);
+    usernamesign=getActivity().findViewById(R.id.usernamesign);
             cpassworded=getActivity().findViewById(R.id.cpassworded);
         loginbtp=getActivity().findViewById(R.id.loginbtp);
         tsignupbtp=getView().findViewById(R.id.tsignupbtp);
             objectfirebaseauth=FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         tsignupbtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
